@@ -1,10 +1,10 @@
-import React, {useContext, useState } from "react";
+import React, {useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { ToDoContext } from "../contexts/ToDoContext";
 import TaskForm from "./TaskForm";
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from 'react-bootstrap';
-import { findDOMNode, render } from 'react-dom';
+import { unmountComponentAtNode, render } from "react-dom";
 
 const ToDoList  = () => {
  
@@ -21,25 +21,25 @@ const ToDoList  = () => {
       
       setTodos([...todos, { title, id: uuidv4()}])
   }
+  
   const handleDelete = (e) => {
-    let item = (element) => element === e.target.value;
-    let titles = []
+    let ids = []
     todos.map(todo => {
-      return titles.push(todo.title)
+      return ids.push(todo.id)
     }
     )
-    item = titles.filter(item)
-    ReactDOM.findDOMNode(item)
-    ReactDOM.unmountComponentAtNode(item);
-    debugger
+  
+    let item = ids.filter(element => element == e.target.value)
+    unmountComponentAtNode(document.getElementById(item));
   }
+
   return(
     <div className="to-do-list" style={{color: theme.syntax, background: theme.bg}}>
     <ul>
       {todos.map(todo => {
         return(
           <div>
-      <li key={todo.id} style={{background: theme.ui}}> {todo.title}  <Button  type={todo.title} value={todo.title} onClick={handleDelete}> Delete </Button> </li>  
+      <li id={todo.id} key={todo.id} style={{background: theme.ui}}> {todo.title}  <Button  type={todo.title} value={todo.id} onClick={handleDelete}> Delete </Button> </li>  
      
       </div>
         )
