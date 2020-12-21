@@ -4,6 +4,7 @@ import { ToDoContext } from "../contexts/ToDoContext";
 import TaskForm from "./TaskForm";
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from 'react-bootstrap';
+import { findDOMNode, render } from 'react-dom';
 
 const ToDoList  = () => {
  
@@ -21,12 +22,17 @@ const ToDoList  = () => {
       setTodos([...todos, { title, id: uuidv4()}])
   }
   const handleDelete = (e) => {
-    let index = (element) => element === e.target.value;
-    index = todos.findIndex(index)
-    debugger
-    index.splice(index, 1)
-    debugger
+    let item = (element) => element === e.target.value;
+    let titles = []
+    todos.map(todo => {
+      return titles.push(todo.title)
     }
+    )
+    item = titles.filter(item)
+    ReactDOM.findDOMNode(item)
+    ReactDOM.unmountComponentAtNode(item);
+    debugger
+  }
   return(
     <div className="to-do-list" style={{color: theme.syntax, background: theme.bg}}>
     <ul>
