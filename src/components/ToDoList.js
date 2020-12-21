@@ -3,6 +3,7 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { ToDoContext } from "../contexts/ToDoContext";
 import TaskForm from "./TaskForm";
 import { v4 as uuidv4 } from 'uuid';
+import { Button } from 'react-bootstrap';
 
 const ToDoList  = () => {
   const {isLightTheme, light, dark } = useContext(ThemeContext)
@@ -23,7 +24,10 @@ const ToDoList  = () => {
     <ul>
       {todos.map(todo => {
         return(
-      <li key={todo.id} style={{background: theme.ui}}> {todo.title} </li>  
+          <div>
+      <li key={todo.id} style={{background: theme.ui}}> {todo.title}  <Button  type="submit" value="Submit"> Delete </Button> </li>  
+     
+      </div>
         )
       })}
     </ul>
