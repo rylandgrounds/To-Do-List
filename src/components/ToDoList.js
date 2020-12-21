@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Button } from 'react-bootstrap';
 
 const ToDoList  = () => {
+ 
   const {isLightTheme, light, dark } = useContext(ThemeContext)
   const {tasks} = useContext(ToDoContext)
   const theme = isLightTheme ? light : dark;
@@ -19,13 +20,20 @@ const ToDoList  = () => {
       
       setTodos([...todos, { title, id: uuidv4()}])
   }
+  const handleDelete = (e) => {
+    let index = (element) => element === e.target.value;
+    index = todos.findIndex(index)
+    debugger
+    index.splice(index, 1)
+    debugger
+    }
   return(
     <div className="to-do-list" style={{color: theme.syntax, background: theme.bg}}>
     <ul>
       {todos.map(todo => {
         return(
           <div>
-      <li key={todo.id} style={{background: theme.ui}}> {todo.title}  <Button  type="submit" value="Submit"> Delete </Button> </li>  
+      <li key={todo.id} style={{background: theme.ui}}> {todo.title}  <Button  type={todo.title} value={todo.title} onClick={handleDelete}> Delete </Button> </li>  
      
       </div>
         )
